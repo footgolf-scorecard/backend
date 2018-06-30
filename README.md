@@ -1,20 +1,18 @@
-# Python: Getting Started
+# Footgolf Scorecard API
 
-A barebones Django app, which can easily be deployed to Heroku.
-
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
+This application was started with [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
 
 ## Running Locally
 
 Make sure you have Python [installed properly](http://install.python-guide.org). Also, install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) and [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
 
 ```sh
-$ git clone git@github.com:heroku/python-getting-started.git
-$ cd python-getting-started
+$ git clone https://github.com/footgolf-scorecard/backend.git
+$ cd backend
 
 $ pipenv install
 
-$ createdb python_getting_started
+$ createdb backend
 
 $ python manage.py migrate
 $ python manage.py collectstatic
