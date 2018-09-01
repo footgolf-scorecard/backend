@@ -3,6 +3,9 @@ from rest_framework import serializers
 from v1.models import Course, Game, Hole, Score
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    def create(self, validated_data):
+        return User.objects.create(**validated_data)
+
     class Meta:
         model = User
         fields = ('url', 'username', 'email', 'groups')
@@ -25,9 +28,9 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
 class HoleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Hole
-        fields = ('course', 'number', 'yardage', 'par')
+        fields = ('number', 'yardage', 'par')
 
 class ScoreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Score
-        fields = ('game', 'player', 'hole', 'total')
+        fields = ('player', 'hole', 'total')
