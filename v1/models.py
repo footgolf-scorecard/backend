@@ -3,14 +3,16 @@ from django.contrib.auth.models import User
 from django.db import models
 
 class Hole(models.Model):
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, default=None, blank=True)
     number = models.IntegerField(default=0)
     yardage = models.IntegerField(default=0)
     par = models.IntegerField(default=0)
 
 class Course(models.Model):
-    name = models.CharField(max_length=50, default=None)
-    holes = models.ManyToManyField(Hole)
-    address = models.CharField(max_length=200, default=None)
+    name = models.CharField(max_length=50, default='')
+    holes = models.ManyToManyField(Hole, related_name='+', blank=True)
+    address = models.CharField(max_length=200, default='', blank=True)
+    length = models.IntegerField(default=9)
 
 class Score(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
