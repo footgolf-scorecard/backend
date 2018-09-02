@@ -1,6 +1,6 @@
-import datetime
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 class Hole(models.Model):
     course = models.ForeignKey('Course', on_delete=models.CASCADE, default=None, blank=True)
@@ -22,6 +22,6 @@ class Score(models.Model):
 
 class Game(models.Model):
     players = models.ManyToManyField(User, blank=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=None)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=None, blank=True)
     scores = models.ManyToManyField(Score, related_name='+', blank=True)
-    date = models.DateTimeField('date played', default=datetime.date.today)
+    date = models.DateTimeField('date played', default=timezone.now)

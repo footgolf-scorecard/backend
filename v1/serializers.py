@@ -54,10 +54,13 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):
     def create(self, validated_data):
-        # game.name = validated_data.get('name', game.name)
-        # game.address = validated_data.get('address', game.address)
-        # game.length = validated_data.get('length', game.length)
-        return Game.objects.create(**validated_data)
+        new_game = Game.objects.create(course=validated_data.get('course'))
+
+        for player in validated_data.get('players'):
+            new_game.players.add(player)
+
+        new_game.save()
+        return new_game
 
     def update(self, instance, validated_data):
         instance.players = validated_data.get('players', instance.players)
@@ -69,7 +72,7 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('id', 'players', 'date', 'scores', 'course')
+        fields = ('id', 'url', 'players', 'date', 'scores', 'course')
 
 class HoleSerializer(serializers.HyperlinkedModelSerializer):
     def create(self, validated_data):
@@ -84,7 +87,7 @@ class HoleSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Hole
-        fields = ('id', 'course', 'number', 'yardage', 'par')
+        fields = ('id', 'url', 'course', 'number', 'yardage', 'par')
 
 class ScoreSerializer(serializers.HyperlinkedModelSerializer):
     def create(self, validated_data):
@@ -99,4 +102,4 @@ class ScoreSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Score
-        fields = ('id', 'player', 'hole', 'total', 'game')
+        fields = ('id', 'url', 'player', 'hole', 'total', 'game')
