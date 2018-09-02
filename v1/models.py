@@ -15,12 +15,13 @@ class Course(models.Model):
     length = models.IntegerField(default=9)
 
 class Score(models.Model):
+    game = models.ForeignKey('Game', on_delete=models.CASCADE, default=None)
     player = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     hole = models.ForeignKey(Hole, on_delete=models.CASCADE, default=None)
     total = models.IntegerField(default=0)
 
 class Game(models.Model):
-    players = models.ManyToManyField(User)
+    players = models.ManyToManyField(User, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, default=None)
-    scores = models.ManyToManyField(Score)
+    scores = models.ManyToManyField(Score, related_name='+', blank=True)
     date = models.DateTimeField('date played', default=datetime.date.today)
